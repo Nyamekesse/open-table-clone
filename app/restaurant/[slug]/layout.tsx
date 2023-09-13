@@ -1,5 +1,6 @@
 import Header from './components/Header'
 import type { Metadata } from 'next'
+import 'react-datepicker/dist/react-datepicker.css'
 
 export const metadata: Metadata = {
   title: 'Restaurant - Milestones',
