@@ -1,23 +1,34 @@
-import { NextApiResponse, NextApiRequest } from 'next'
-import { times } from '../../../../data'
-import { PrismaClient } from '@prisma/client'
+import { times } from '@/data'
+import { PrismaClient, Restaurant } from '@prisma/client'
+import { GetResult } from '@prisma/client/runtime/library'
+import { NextApiResponse } from 'next'
 
 const prisma = new PrismaClient()
 
-export default async function handler(
-  req: NextApiRequest,
+export const findAvailableTables = async ({
+  time,
+  day,
+  res,
+  restaurant,
+}: {
+  time: string
+  day: string
+  restaurant: {
+    tables: (GetResult<
+      {
+        id: number
+        seats: number
+        restaurant_id: number
+        created_at: Date
+        updated_at: Date
+      },
+      any
+    > & {})[]
+    open_time: string
+    close_time: string
+  } | null
   res: NextApiResponse
-) {
-  const { slug, day, time, partySize } = req.query as {
-    slug: string
-    day: string
-    time: string
-    partySize: string
-  }
-
-  if (!day || !time || !time || !partySize)
-    return res.status(400).json({ errorMessage: 'Invalid data provided' })
-
+}) => {
   const searchTimes = times.find((t) => {
     return t.time === time
   })?.searchTimes
@@ -47,16 +58,6 @@ export default async function handler(
         }
       }, {})
   })
-  const restaurant = await prisma.restaurant.findUnique({
-    where: {
-      slug,
-    },
-    select: {
-      tables: true,
-      open_time: true,
-      close_time: true,
-    },
-  })
   if (!restaurant)
     return res.status(400).json({ errorMessage: 'Invalid data provided' })
   const tables = restaurant.tables
@@ -75,24 +76,6 @@ export default async function handler(
       return true
     })
   })
-  const availabilities = searchTimesWithTables
-    .map((t) => {
-      const sumSeats = t.tables.reduce((sum, tables) => {
-        return sum + tables.seats
-      }, 0)
-      return {
-        time: t.time,
-        available: sumSeats >= parseInt(partySize),
-      }
-    })
-    .filter((availability) => {
-      const timeIsAfterOpeningHour =
-        new Date(`${day}T${availability.time}`) >=
-        new Date(`${day}T${restaurant.open_time}`)
-      const timeIsBeforeClosingHour =
-        new Date(`${day}T${availability.time}`) <=
-        new Date(`${day}T${restaurant.close_time}`)
-      return timeIsAfterOpeningHour && timeIsBeforeClosingHour
-    })
-  return res.json(availabilities)
+
+  return searchTimesWithTables
 }
