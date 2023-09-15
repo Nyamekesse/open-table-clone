@@ -128,8 +128,12 @@ export default function ReservationCard({
               ) : (
                 <div
                   key={time.time.toString()}
-                  className="bg-gray-500 p-2 w-24 mb-3 rounded mr-3"
-                ></div>
+                  className="bg-gray-500 p-2 w-24 mb-3 rounded mr-3 text-center"
+                >
+                  <p className="text-sm font-bold">
+                    {convertToDisplayTime(time.time as Time)}
+                  </p>
+                </div>
               )
             })}
           </div>

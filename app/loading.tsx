@@ -1,18 +1,18 @@
-import React from 'react'
-import Header from './components/Header'
+'use client'
 
-export default function Loading() {
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
+import { useState } from 'react'
+
+export default function LoadingBackdrop({ open }: { open: boolean }) {
   return (
-    <div className="bg-purple-400 h-screen">
-      <Header />
-      <div className="py-3 px-36 mt-10 flex flex-wrap justify-center">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
-          <div
-            className="animate-pulse m-3 bg-slate-200 w-64 h-72 rounded overflow-hidden border cursor-pointer"
-            key={num}
-          ></div>
-        ))}
-      </div>
+    <div>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={true}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   )
 }
