@@ -1,9 +1,6 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import { times } from '../../../../data'
-import { PrismaClient } from '@prisma/client'
 import { findAvailableTables } from '@/services/restaurant/findAvailableTables'
-
-const prisma = new PrismaClient()
+import { prisma } from '@/shared/constants'
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { slug, day, time, partySize } = req.query as {

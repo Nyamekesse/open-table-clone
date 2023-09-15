@@ -1,9 +1,7 @@
 import { times } from '@/data'
-import { PrismaClient, Restaurant } from '@prisma/client'
+import { prisma } from '@/shared/constants'
 import { GetResult } from '@prisma/client/runtime/library'
 import { NextApiResponse } from 'next'
-
-const prisma = new PrismaClient()
 
 export const findAvailableTables = async ({
   time,

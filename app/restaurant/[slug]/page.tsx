@@ -1,4 +1,3 @@
-import Header from './components/Header'
 import RestaurantNavBar from './components/RestaurantNavBar'
 import Title from './components/Title'
 import Rating from './components/Rating'
@@ -6,10 +5,9 @@ import Description from './components/Description'
 import Images from './components/Images'
 import Reviews from './components/Reviews'
 import ReservationCard from './components/ReservationCard'
-import { PrismaClient, Review } from '@prisma/client'
+import { Review } from '@prisma/client'
 import { notFound } from 'next/navigation'
-
-const prisma = new PrismaClient()
+import { prisma } from '@/shared/constants'
 
 interface Restaurant {
   id: number

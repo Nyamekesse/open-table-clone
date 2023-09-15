@@ -55,6 +55,7 @@ export default function AuthContext({
           error: null,
           loading: false,
         })
+        return
       }
       const response = await axios.get('http://localhost:3000/api/auth/me', {
         headers: {

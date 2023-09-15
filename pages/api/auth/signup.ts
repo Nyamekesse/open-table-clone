@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client'
 import { NextApiResponse, NextApiRequest } from 'next'
 import validator from 'validator'
 import bcrypt from 'bcrypt'
 import * as jose from 'jose'
 import { setCookie } from 'cookies-next'
+import { prisma } from '@/shared/constants'
 
 interface requestBody {
   firstName: string
@@ -13,8 +13,6 @@ interface requestBody {
   city: string
   password: string
 }
-
-const prisma = new PrismaClient()
 
 export default async function handler(
   req: NextApiRequest,

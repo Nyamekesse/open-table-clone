@@ -2,7 +2,8 @@ import Header from './components/Header'
 import SearchSideBar from './components/SearchSideBar'
 import RestaurantCard from './components/RestaurantCard'
 import type { Metadata } from 'next'
-import { PRICE, PrismaClient } from '@prisma/client'
+import { PRICE } from '@prisma/client'
+import { prisma } from '@/shared/constants'
 
 export const metadata: Metadata = {
   title: 'Search Restaurants | Open Table',
@@ -14,7 +15,6 @@ interface SearchPrams {
   cuisine?: string
   price?: PRICE
 }
-const prisma = new PrismaClient()
 const fetchRestaurantByCity = async (searchParams: SearchPrams) => {
   const select = {
     id: true,

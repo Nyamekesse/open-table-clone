@@ -1,8 +1,8 @@
 import { NextApiResponse, NextApiRequest } from 'next'
 import * as jose from 'jose'
 import jwt from 'jsonwebtoken'
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import { prisma } from '@/shared/constants'
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -29,15 +29,13 @@ export default async function handler(
       },
     })
     if (!user) return res.status(401).json({ errorMessage: 'User not found' })
-    return res
-      .status(200)
-      .json({
-        id: user.id,
-        firstName: user.first_name,
-        lastName: user.last_name,
-        phone: user.phone,
-        city: user.city,
-      })
+    return res.status(200).json({
+      id: user.id,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      phone: user.phone,
+      city: user.city,
+    })
   }
 
   return res.status(404).json('Undefined endpoint')
