@@ -33,7 +33,6 @@ export default function ReservationCard({
 
   const handleClick = () => {
     fetchAvailabilities({ slug, time, partySize, day })
-    console.log(data)
   }
   const filterTimeByRestaurantOpenWindow = () => {
     const timesWithInWindow: typeof times = []

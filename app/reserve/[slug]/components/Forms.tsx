@@ -30,7 +30,6 @@ export default function Forms({
     setInputs({ ...inputs, [name]: value })
   }
   const handleClick = async () => {
-    console.log(inputs)
     const booking = await createReservation({
       slug,
       day,
