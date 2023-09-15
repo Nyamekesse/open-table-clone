@@ -117,6 +117,7 @@ export default function ReservationCard({
             {data.map((time) => {
               return time.available ? (
                 <Link
+                  key={time.time.toString()}
                   className="bg-red-600 cursor-pointer p-2 w-24 text-center text-white rounded mr-3 mb-3"
                   href={`/reserve/${slug}?date=${day}T${time.time}&partySize=${partySize}`}
                 >
@@ -125,7 +126,12 @@ export default function ReservationCard({
                   </p>
                 </Link>
               ) : (
-                <div className="bg-gray-500 p-2 w-24 mb-3 rounded mr-3"></div>
+                <div
+                  key={time.time.toString()}
+                  className="bg-gray-500 p-2 w-24 mb-3 rounded mr-3"
+                >
+                  {time.time}
+                </div>
               )
             })}
           </div>
