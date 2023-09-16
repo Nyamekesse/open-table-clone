@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { partySize as partySizes, times } from '../../../../data'
 import DatePicker from 'react-datepicker'
 import useAvailabilities from '@/hooks/useAvailabilities'
 import { CircularProgress } from '@mui/material'
 import Link from 'next/link'
 import { Time, convertToDisplayTime } from '@/utils/convertToDisplayTime'
+import { AuthenticationContext } from '@/app/context/authContext'
 
 export default function ReservationCard({
   openTime,
@@ -17,6 +18,7 @@ export default function ReservationCard({
   closedTime: string
   slug: string
 }) {
+  const { data: userInfo } = useContext(AuthenticationContext)
   const { data, loading, error, fetchAvailabilities } = useAvailabilities()
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
   const [time, setTime] = useState(openTime)
@@ -101,13 +103,22 @@ export default function ReservationCard({
         </div>
       </div>
       <div className="mt-5">
-        <button
-          className="bg-red-600 rounded px-4 text-white w-full font-bold h-16"
-          onClick={handleClick}
-          disabled={loading}
-        >
-          {loading ? <CircularProgress color="inherit" /> : 'Find a time'}
-        </button>
+        {userInfo ? (
+          <button
+            className="bg-red-600 rounded px-4 text-white w-full font-bold h-16"
+            onClick={handleClick}
+            disabled={loading}
+          >
+            {loading ? <CircularProgress color="inherit" /> : 'Find a time'}
+          </button>
+        ) : (
+          <button
+            className="bg-gray-400 rounded px-4 text-white w-full font-bold h-16"
+            disabled={true}
+          >
+            Log in to Find time
+          </button>
+        )}
       </div>
       {data && data.length ? (
         <div className="mt-4 ">

@@ -17,17 +17,22 @@ export default function NavBar() {
         {loading ? null : (
           <div className="flex ">
             {data ? (
-              <button
-                className="px-4 bg-blue-400 mr-3 text-white border p-1 rounded"
-                onClick={signout}
-              >
-                Sign Out
-              </button>
+              <div className="flex justify-center items-center pr-3">
+                <h1 className="px-4 font-bold text-reg">
+                  {data.firstName} {data.lastName}
+                </h1>
+                <button
+                  className="px-4 bg-blue-400 mr-3 text-white border p-1 rounded"
+                  onClick={signout}
+                >
+                  Sign Out
+                </button>
+              </div>
             ) : (
-              <>
+              <div className="flex justify-center items-center pr-3">
                 <AuthModal isSignIn={true} />
                 <AuthModal isSignIn={false} />
-              </>
+              </div>
             )}
           </div>
         )}

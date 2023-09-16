@@ -27,6 +27,7 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
   const { loading, data, error } = useContext(AuthenticationContext)
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
     setInputs({ ...inputs, [e.target.name]: e.target.value })
   }
 
@@ -58,7 +59,10 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
   const renderContent = (signInContent: string, signUpContent: string) => {
     return isSignIn ? signInContent : signUpContent
   }
-  const handleClick = () => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault()
     if (isSignIn) {
       signin({ email: inputs.email, password: inputs.password }, handleClose)
     } else {
